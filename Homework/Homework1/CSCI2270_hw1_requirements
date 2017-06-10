@@ -1,0 +1,82 @@
+// read file of unknown size
+// store, search, iterate, and sort through data in array of struct
+
+
+look for wanted and for sale items and matches
+
+
+
+100 wanted/sales items
+5 categories 
+- bike
+- microwave
+- dresser
+- truck
+- chicken
+
+each /n is one item
+
+read text file
+read each line
+[struct () , struct ()] store each item
+struct itemArray[100] //array of struct for storing items
+
+item struct
+	type:
+	price: 
+	state: sale/wanted
+
+PSEUDO CODE
+1. match the list on file to the array
+- prompt user for filename to be read //cin>>filename;
+- read filename provided by user
+- parse data
+- check for item matches?
+
+
+Implementation
+
+
+Include a comment block at the top of the .cpp source code with your name, assignment number, and
+course instructor.
+schedule the interview if you just want to talk about the assignment and get feedback on your implementation.
+
+read files until the end
+for each read line print each line cout<<"item read "<<item<<" cost "<<cost<<endl;
+check for matches in existing item message board
+	If a match is not found in the array
+		add the item to the array at the first unused position
+	else
+		remove matched item from array and shift array indexes to fill the removed matched index value (Algorithm in (Section 3.2.4 of)
+		
+		Print <type><space><price> ie. "bike 50". #PRICE BEING SOLD/COST, not want price
+		cout<<itemArray[x].type<<" "<<itemArray[x].price<<endl;
+
+After reading
+//print out the sorted array contents....
+
+
+///prints out the final state of the sorted message board 
+	(by item name increasing order) along with the total number of leftover items
+///
+Function Sort&Print()
+	Sort by item name increasing order??? most items first....?
+	printing for sale items : cout<<itemArray[x].type<<","<<"for sale"<<","<<itemArray[x].price<<endl;
+	printing for wanted items : cout<<itemArray[x].type<<", "<<"wanted"<<", "<<itemArray[x].price<<endl;
+	print total number of leftover items cout<<arraySize<<endl;
+
+...call the function after displaying the matched items.
+
+THEN...
+display total number of loop iterations needed to 
+- read the file
+- search the array
+- shift the array when an item is deleted. 
+
+Each count should be displayed on its own line, formatted as:
+cout<<"file read:"<<fileCounter<<endl;
+cout<<"search array:"<<searchCounter<<endl; x for number of iterations to find a match in array
+cout<<"shift array:"<<shiftCounter<<endl;   y for number of shifts in contents of array
+
+NOTES:
+Use # as delimiter foreach output type

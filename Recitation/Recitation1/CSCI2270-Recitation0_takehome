@@ -1,0 +1,46 @@
+// Recitation 0 Take Home
+//Justin Chin
+
+#include <iostream>
+#include <string>
+using namespace std;  
+
+int Swap(int index1, int val1, int index2, int val2, int sourceArr[]){
+    if(val1 < val2){
+        int temp = val2;
+        sourceArr[index2] = val1;
+        sourceArr[index1] = temp;
+        return (index1-1);
+    }
+    else{
+        sourceArr[index1] = val1;
+        sourceArr[index2] = val2;
+        return 0; //exit out of while loop
+    }
+}
+
+void InsertionSort(int unsortedArr[], int arrLen){
+   for (int index = 1 ; index <= arrLen-1 ; index++){
+        int subindex = index;
+  
+        while(subindex != 0){
+            subindex = Swap(subindex,unsortedArr[subindex],subindex-1,unsortedArr[subindex-1],unsortedArr);
+            //cout<<subindex<<endl;
+        }
+        
+        for(int z = 0; z < arrLen; z++)
+            cout<<unsortedArr[z]<< " ";
+        cout<<"\n";
+   }
+   
+}
+
+
+
+int main()
+{
+  int unsorted[4]= { 2, 3, 4, 1 };
+  InsertionSort(unsorted,4);
+  return 0;
+}
+
