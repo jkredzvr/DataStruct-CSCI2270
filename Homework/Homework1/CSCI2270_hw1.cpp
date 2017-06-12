@@ -1,4 +1,3 @@
-
 // Justin Chin
 // Assignment 1
 // Course Instructor: Austin Holler
@@ -19,6 +18,8 @@ item makeItem (string parsedString[]);
 string stringParser(string rawString);
 void SearchForItem(item newItem);
 void removeItemFromIndex(item itemArray[], int removeIndex, int lastIndex);
+void SortArray(string sortParameters[]);
+bool swapVals(int indexFirst, int indexSecond, string sortParam);
 
 item itemArray[100];
 int	fileCounter = 0;
@@ -27,19 +28,15 @@ int shiftCounter = 0;
 int lastFilledIndex = 0;
 
 int main(){
-	cout << "Enter file name to be read: ";
+	//cout << "Enter file name to be read: ";
 	string filename;
 	cin >> filename;
-	cout << filename <<endl;
+	//cout << filename <<endl;
 
 	string line;
 
-
-
-
 	ifstream myfile;
 	myfile.open(filename.c_str());
-
 
 	if(myfile.is_open()){
 
@@ -57,35 +54,48 @@ int main(){
                 token = line.substr(0, pos);
 
                 //read word in line
-                //cout << token << endl;
                 parsedLine[arrayIndex] = token;
                 arrayIndex++;
-
-
                 line.erase(0, pos + delimiter.length());
             }
             //last read word in line
             parsedLine[arrayIndex] = line;
+
             //cout<<parsedLine[0]<<" "<< parsedLine[1]<<" "<<parsedLine[2]<<endl;
 
             //make new item
             item newItem = makeItem(parsedLine);
             cout<<"item read "<<newItem.type<<" cost "<<newItem.price<<endl;
-            //cout<<newItem.type<<" "<< newItem.state<<" "<< newItem.price<<endl;
 
-            //see if item exists in messageBoardItems...
-            SearchForItem(newItem);
-
-
-
-
-
+            if(fileCounter ==1){
+                //Fill first index automatically
+                lastFilledIndex;
+                itemArray[lastFilledIndex]=newItem;
+            }
+            else{
+                //see if item exists in messageBoardItems...
+                SearchForItem(newItem);
+            }
 		}
 
+		//for(int i=0; i<= lastFilledIndex ; i++){
+        //    cout << itemArray[i].type << "i:"<< i<< endl;
+        //}
 
-        cout<<"file read:"<<fileCounter<<endl;
-        cout<<"search array:"<<searchCounter<<endl;
-        cout<<"shift array:"<<shiftCounter<<endl;
+		cout<<"#"<<endl;
+
+		//Sort the array
+		string sortArrayParameters[5] = { "bike", "chicken", "dresser", "microwave", "truck" };
+
+//       for(int i=0; i<33;i++)
+//            cout<<itemArray[i].type<<endl;
+
+        SortArray(sortArrayParameters);
+        cout<<"#"<<endl;
+
+        //cout<<"file read:"<<fileCounter<<endl;
+        //cout<<"search array:"<<searchCounter<<endl;
+        //cout<<"shift array:"<<shiftCounter<<endl;
 
 		myfile.close();
 	}
@@ -108,7 +118,7 @@ void SearchForItem(item newItem){
                     found = true;
                     cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price<<endl;
 
-                    cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price <<" <=" <<newItem.price<<endl;
+                    //cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price <<" <=" <<newItem.price<<endl;
                     removeItemFromIndex(itemArray, searchIndex, lastFilledIndex);
                     shiftCounter++;     //shift array...
                     lastFilledIndex--;	//decrement lastFilled Index
@@ -120,9 +130,9 @@ void SearchForItem(item newItem){
             else {                             //newItem is buy item
                 if(itemArray[searchIndex].price >= newItem.price){//is buy >= sell price
                     found = true;
-                    cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price<<endl;
+                    cout<<itemArray[searchIndex].type<<" "<<newItem.price<<endl;
 
-                    cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price << " >=" <<newItem.price<<endl;
+                    //cout<<itemArray[searchIndex].type<<" "<<itemArray[searchIndex].price << " >=" <<newItem.price<<endl;
                     removeItemFromIndex(itemArray, searchIndex, lastFilledIndex);
                     shiftCounter++;    //shift array...
                     lastFilledIndex--; 	//decrement lastFilled Index
@@ -135,15 +145,16 @@ void SearchForItem(item newItem){
         }
         searchIndex++;
         searchCounter++;
+
     }
     if (!found){//ie, no matches...
         lastFilledIndex++;
         itemArray[lastFilledIndex]=newItem;
-        cout<<"added:"<<newItem.type<<" "<< newItem.state<<" "<< newItem.price<<endl;
+        //cout<<"added:"<<newItem.type<<" "<< newItem.state<<" "<< newItem.price<<endl;
 
     }
 
-    cout<<"found: "<< found <<endl;
+    //cout<<"found: "<< found <<endl;
 }
 
 
@@ -165,88 +176,52 @@ void removeItemFromIndex(item itemArray[], int removeIndex, int lastIndex){
     }
 }
 
-//
-//
-//
-////Code for searching an array
-////Return -1 if not found
-////if ! -1, then actual index found
-//int searchArray(int inputArray[], int searchValue){
-//	bool found = false;
-//	int index = -1; //flag condition to determine if value found in array
-//	int x=0;
-//
-//	int num_elements = sizeof( inputArray ) / sizeof( inputArray[0] );
-//
-//	while(!found && x < num_elements-1){
-//		if(inputArray[x] == searchValue){
-//			found = true;
-//			index = x;
-//		}
-//		else{
-//			x++;
-//		}
-//	}
-//	return index;
-//}
-//
-////Bubble Sort
-//void bubbleSort(int arr[], int length){
-//    for(int i=0; i < length; i++){
-//        for(int j=0; j < length - i; j++){
-//            if(arr[j] > arr[j+1]){
-//                int swapVal = arr[j];
-//                arr[j] = arr[j+1];
-//                arr[j+1] = swapVal;
-//            }
-//        }
-//    }
-//}
-//
-////InsertionSort
-//void insertionSort(int arr[], int length){
-//    for( int i=0; i<length; i++){
-//        int index = arr[i];
-//        int j = i;
-//
-//        while (j>0 && arr[j-1]>index){
-//            arr[j] = arr[j-1];
-//            j=j-1;
-//        }
-//
-//        arr[j]=index;
-//    }
-//}
-//
-//
-//void quickSort(int arr[], int left, int right){
-//	int i = left;
-//	int j = right;
-//	int pivot = arr[(left+right)/2];
-//
-//	while (i <= j){
-//		while(arr[i] < pivot){
-//			i++;
-//		}
-//		while(arr[j] > pivot){
-//			j--;
-//		}
-//
-//		if(i<=j){
-//			//swap
-//			int temp = arr[i];
-//			arr[i] = arr[j];
-//			arr[j] = temp;
-//
-//			i++;
-//			j--;
-//		}
-//	}
-//	if(left < j){
-//		quickSort(arr, left, j);
-//
-//	}
-//	if(i < right){
-//		quickSort(arr, i, right);
-//	}
-//}
+
+void SortArray(string sortParameters[]){
+    int lastIndex=0;
+    for(int i=0 ; i<= 4; i++){
+        //for each parameter
+        string sortParam = sortParameters[i];
+
+        //cout<<lastIndex<<endl;
+
+        int startIndex = lastIndex;
+        int startForLoop = lastIndex;
+        for(startIndex; startIndex <= lastFilledIndex; startIndex++){
+            //cout<< "looking at " << itemArray[startIndex].type << " i:" << startIndex << " vs " << itemArray[startIndex+1].type << " i:" << startIndex+1 <<endl;
+            bool isValSwapped = swapVals(startIndex, startIndex+1, sortParam);
+            if(isValSwapped){
+                lastIndex = startIndex+1;
+                int traverseIndex = startIndex;
+                for(traverseIndex; traverseIndex > startForLoop ; traverseIndex--){
+                    isValSwapped=swapVals(traverseIndex-1, traverseIndex, sortParam);
+                    if(isValSwapped)
+                        lastIndex = traverseIndex;
+                }
+            }
+        }
+    }
+
+    for(int i=0; i<= lastFilledIndex; i++)
+        cout<<itemArray[i].type<<endl;
+    cout<<lastFilledIndex+1<<endl;
+
+}
+bool swapVals(int indexFirst, int indexSecond, string sortParam){
+    if(itemArray[indexFirst].type == sortParam && itemArray[indexSecond].type == sortParam)
+        //Do nothing iterate to the next for loop
+        return false;
+    if(itemArray[indexFirst].type == sortParam && itemArray[indexSecond].type != sortParam)
+        //Do nothing iterate to the next for loop
+        return false;
+    if(itemArray[indexFirst].type != sortParam && itemArray[indexSecond].type != sortParam)
+        return false;
+    if(itemArray[indexFirst].type != sortParam && itemArray[indexSecond].type == sortParam){
+        //cout<< "switching "<< itemArray[indexFirst].type << "i: " << indexFirst <<  " for " << itemArray[indexSecond].type << "i: " << indexSecond<<endl;
+        item tempItem = itemArray[indexFirst];
+        itemArray[indexFirst] = itemArray[indexSecond];
+        itemArray[indexSecond] = tempItem;
+        return true;
+    }
+
+}
