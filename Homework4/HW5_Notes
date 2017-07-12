@@ -1,0 +1,226 @@
+### Node Insertion
+1. start Tree traversal with root node
+2. while temperorary node set != null
+     -evaluate where to insert node of interest (left or right)
+3. set temp = temp -> left/right 
+4. when a leaf is reached
+     - check if node of Interest belongs as left or right child last node traversed  
+
+
+```C++
+void InsertNode(int value, string movieName, int year, int count) {
+  node *insertNode = new node();
+  node *tmp = root; //set pointer to root node
+  
+  //CONSTRUCT NODE
+
+  node *parent = tmp;
+
+  while(tmp != nullptr) {
+    //find out where to put it
+    parent = tmp;
+
+    string insertMovieName = insertNode->movieName;
+    string currMovieName = tmp->movieName;
+
+    //cout << insertMovieName << " inserting to " << currMovieName << endl;
+
+    int resultStrComp = strcmp( (insertNode->movieName).c_str() , (tmp->movieName).c_str() );
+
+    if(resultStrComp < 0){ //compare input value to root key
+      tmp = tmp->leftChild;
+    }
+    else{
+      tmp = tmp->rightChild;
+    }
+  }
+  // actual placement of node
+  if (parent == nullptr){ //check if tree is empty
+    root = insertNode;
+    //cout << "root is " << root->movieName << endl;
+  }
+  else if(strcmp( (insertNode->movieName).c_str() , (parent->movieName).c_str() ) < 0){
+
+    // if left < parent, add to left
+    parent->leftChild = insertNode;
+    insertNode->parent = parent;
+    //cout << insertNode-> movieName << " inserted left of parent " << parent->movieName << endl;
+  }
+  else{ //otherwise, add to right
+    parent->rightChild = insertNode;
+    insertNode->parent = parent;
+    //cout << insertNode-> movieName << " inserted right of parent " << parent->movieName << endl;
+  }
+};
+```
+
+### Recursive Node Search: returning pointer to  node
+
+1. 1st if statement checks if current key/value matches search, and if found return to exit out immmediately
+2. Use 2nd else if to recursively call left node,based on search value 
+3. Lastly always call search right node, which
+   A) returns null if there are no right child and terminates the recursive call
+   B) recursively searches another sub-tree to traverse if there is a right node
+
+```C++
+node* searchMovie(node *movieNode, string key){
+    //Left Parent Right
+    if(movieNode != nullptr){
+      if(movieNode->movieName == key){
+        return movieNode;
+      }
+      else if(strcmp( key.c_str() , (movieNode->movieName).c_str() ) < 0){
+        return searchMovie(movieNode->leftChild, key);
+      }
+      else {
+        return searchMovie(movieNode->rightChild, key);
+      }
+    }
+    else{
+      return nullptr;
+    }
+}
+```
+
+### Tree minimum value
+
+1.  Traverse through leftChildren using while loop
+2.  At the first node that doesnt have a leftChild
+      - break out of while loop and return the last node 
+
+```C++
+node* treeMinimum(node *startNode){
+  node *temp = startNode;
+  while(temp != nullptr) {
+    if(temp->leftChild != nullptr){ //compare input value to root key
+      temp = temp->leftChild;
+    }
+    else{
+      startNode = temp;
+      temp = nullptr;
+    }
+  }
+  return startNode;
+}
+```
+
+### Node Deletion
+1.  Check if root node being deleted
+2.  Check if 0 children
+    - check if node is parents (Left/Right) child
+    - set parent's (Left/Right) child nullptr
+    - delete node
+3.  Check if 2 children
+    - find minimum of right node
+    - if right node == minimum
+      - set new parent node as right node
+      - node left child becomes right node's left child
+      - delete node
+    - if right node != minimum node
+        transfer min node's right subtree to min node's parent's left child
+        min node's parent = node's parent;
+        determine and set min's parent to (Left/Right) child of node's parent
+        transfer node's left child to min's left child
+        transfer node's right child to min's right child
+        delete node;
+        
+4.  Check if 1 child
+    - if node is parent's Left Child?
+        check if child is left/right
+        node's parent leftChild = node's (Left/Right) child
+        delete node;
+      
+    - Right Child?
+        check if child is left/right
+         node's parent rightChild = node's (Left/Right) child
+         delete node;
+
+``C++
+void DeleteMovie(node *movieNode){
+  if(movieNode != root){
+    //node has no children
+    if(movieNode->leftChild == nullptr && movieNode->rightChild == nullptr){
+      //check if node is parent's left or right child
+      if(movieNode->key < movieNode->parent->key){
+        movieNode->parent->leftChild = nullptr;
+        delete movieNode;
+      }
+      else{
+        movieNode->parent->rightChild = nullptr;
+        delete movieNode;
+      }
+    }
+    //two children
+    else if(movieNode->leftChild != nullptr && movieNode->rightChild != nullptr) { //two children
+      node *min = treeMinimum(movieNode->rightChild);
+      if (min == movieNode->rightChild) {
+        (movieNode->key < movieNode->parent->key) ? movieNode->parent->leftChild = min : movieNode->parent->rightChild = min;
+        min->parent = movieNode->parent;
+        min->leftChild = movieNode->leftChild;
+        movieNode->leftChild->parent = min;
+        delete movieNode;
+      }
+      else {
+        min->parent->leftChild = min->rightChild;
+        min->rightChild->parent = min->parent;
+        min->parent = movieNode->parent;
+        (movieNode->key < movieNode->parent->key) ? (movieNode->parent->leftChild = min) : (movieNode->parent->rightChild = min);
+        min->leftChild = movieNode->leftChild;
+        min->rightChild = movieNode->rightChild;
+        movieNode->rightChild->parent = min;
+        movieNode->leftChild->parent = min;
+        delete movieNode;
+      }
+    }
+    //one child (left)
+    else if(movieNode->leftChild != nullptr){
+      if(movieNode->key < movieNode->parent->key){
+        movieNode->parent->leftChild = movieNode->leftChild;
+        delete movieNode;
+      }
+      else{
+        movieNode->parent->rightChild = movieNode->leftChild;
+        delete movieNode;
+      }
+    }
+    //one child (left)
+    else if(movieNode->rightChild != nullptr){
+      if(movieNode->key < movieNode->parent->key){
+        movieNode->parent->leftChild = movieNode->rightChild;
+        delete movieNode;
+      }
+      else{
+        movieNode->parent->rightChild = movieNode->rightChild;
+        delete movieNode;
+      }
+    }
+  }
+}
+```
+
+### Traverse entire tree (inOrder: Left Right Parent )
+1.  if node has left Child
+       call method again with left child
+2.  if node has right child
+       call method again with right child   
+3.  finally delete the node
+
+```C++
+void DeleteAllMovies(node *movieNode){
+
+    //Left Parent Right
+    if(movieNode != nullptr){
+        if( movieNode->leftChild != nullptr){
+          DeleteAllMovies(movieNode->leftChild);
+        }
+        if (movieNode->rightChild != nullptr) {
+           DeleteAllMovies(movieNode->rightChild);
+        }
+        cout << "Deleting: " + movieNode->movieName << endl;
+        delete movieNode;
+    }
+    else{
+        return ;
+    }
+}
+```
