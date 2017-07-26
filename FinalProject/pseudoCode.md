@@ -9,7 +9,7 @@ Hashmap
 // Weights between -4 and 4 to classify pairs who are Programmers (positively weighted) , Artistic (negatively weighted), or balanced ( near 0 )
 //  Connection criterion will favor/connect pairs of people who are more balanced (weighted near 0)
 
-class Rank : Trait 
+class Skill : Trait 
 
 | Classification | Skill Name | Skill Weight |
 | :-------------: | :-------------: | :-------------: |
@@ -52,6 +52,8 @@ class Rank : Trait
 // Weights between -2 and 2 to classify pairs who are more Programming oriented (positively weighted) , or Artistically Oriented (negatively weighted), or balanced ( near 0 )
 //  Connection criterion will favor/connect pairs of people who are more balanced (weighted near 0)
 
+class Department : Trait 
+
 | Classification| Skill Name | Skill Weight |
 | :-------------: | :-------------: | :-------------: |
 | CS  |   |       -2       |
@@ -74,7 +76,8 @@ class Rank : Trait
     Criterion ConnectionCriteria
     Criterion WeightCriteria
     GenerateGraph()
-    Array[Person] GroupMemebers
+    Array[Person] GroupMemebers //vertices
+    Connections                 //edges
   }
   
   NetworkGraph::GenerateGraph()
