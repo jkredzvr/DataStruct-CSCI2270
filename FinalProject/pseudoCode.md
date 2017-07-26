@@ -59,6 +59,51 @@ class Rank : Trait
 | Arts and Science  |   |       1       |
 | Film  |   |       2       |
 
-
+```C
+  enum Criterion { Department, Rank, Skills, Interests } 
+  
+  struct Trait {
+    str Classification
+    str SkillName
+    int SkillWeight
+  }
+  
+  
+  
+  class NetworkGraph {
+    Criterion ConnectionCriteria
+    Criterion WeightCriteria
+    GenerateGraph()
+    Array[Person] GroupMemebers
+  }
+  
+  NetworkGraph::GenerateGraph()
+    for each member in GroupMembers
+      member.
+  
+  
+  class Person{
+    public: 
+      DetermineWeight(Criterion)
+      DetermineConnection(Person, Criterion)
+      str Name
+      Trait Rank
+      Array[Trait] Skills
+      Array[Trait] Interests
+      Trait Department
+    
+    private: 
+      int WeightValue
+      vector[Person] Connections
+      ClearConnections()
+      AddConnection()
+  }
+  
+    
+  
+  
+    
+    
+```
 
 
