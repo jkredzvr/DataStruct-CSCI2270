@@ -1,0 +1,22 @@
+1,Programmer,java,1
+1,Programmer,Python,2
+1,Programmer,C#,3
+1,Programmer,Unity,4
+1,Artist,Drawing,-1
+1,Artist,Illustrator,-2
+1,Artist,Photoshop,-3
+1,Artist,Maya,-4
+2,Education,,1
+2,Film,,1
+2,Games,,1
+2,Music,,1
+2,360 Video,,1
+3,Freshman,,1
+3,Sophomore,,2
+3,Junior,,3
+3,Senior,,4
+3,Graduate,,5
+4,CS,,-2
+4,ATLAS,,-1
+4,TAM,,1
+4,Arts and Science,,2
