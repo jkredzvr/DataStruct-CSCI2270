@@ -14,10 +14,11 @@ Project Requirements
 The motivation for this project was to create an application that could "match" or pair up students from different colleges and majors based on their interests or knowledge of programming/artistic skill.  In our Virtual Reality/Augmented Reality student club, there are students from different backgrounds, schools, with varying levels of experiences and interests. This application aims to help match students, with varying qualities/traits, based on different matching thresholds. 
 
 Each student or "Person" have properties or "Traits" regarding
-Interests [VR, Film, Games, Education]
-School [ATLAS, CS, Arts and Science, TAM]
-Rank [Freshman, Sophomore, Junior, Senior, Graduate] 
-Skills [Photoshop, Unity, Drawing, C# ...]
+
+- Interests [VR, Film, Games, Education]
+- School [ATLAS, CS, Arts and Science, TAM]
+- Rank [Freshman, Sophomore, Junior, Senior, Graduate] 
+- Skills [Photoshop, Unity, Drawing, C# ...]
 
 From the 4 different categories of Traits mentioned above, the application asks which ones you want to match students based two criterias:
 1. Connection Criteria "Edge Criterion"
@@ -30,60 +31,63 @@ From these network graphs, you could possibly identify/match:
 
 Each trait is given a weight to determine whether two people would be a good match as a team for different thresholds.  The following describes the weights for each Trait and thresholds and reasoning for determining a match.
 
-// Weights between -4 and 4 to classify pairs who are Programmers (positively weighted) , Artistic (negatively weighted), or balanced ( near 0 )
-//  Connection criterion will favor/connect pairs of people who are more balanced (weighted near 0)
 
-class Skill : Trait 
+Skill Trait 
 
-| Classification | Skill Name | Skill Weight |
-| :-------------: | :-------------: | :-------------: |
-| Programmer  | Java  |       1       |
-| Programmer  | Python  |       2       |
-| Programmer  | C#  |       3       |
-| Programmer  | Unity  |       4       |
-| Artist  | Drawing  |       -1       |
-| Artist  | Illustrator  |       -2       |
-| Artist  |  Photoshop |       -3       |
-| Artist  |  Maya |       -4       |
+Weights between -4 and 4 to classify pairs who are Programmers (positively weighted) , Artistic (negatively weighted), or balanced ( near 0 ).  (Positive/Negative values were used to differentiate Programming and Artisticly weighted pairs, and not based on my view of Programmers vs Artists) 
 
+Pairs are matched/connect if the sum of their Skill Weights are near 0 ( -2 < sum < 2 )
 
-//All weighted to be 0 since weight/connection criterion will be based on # of matched Interests between people
-
-class Interests : Trait 
-
-| Classification | Skill Name | Skill Weight |
-| :-------------: | :-------------: | :-------------: |
-| Education  |   |       1       |
-| Film  |   |       1       |
-| Games  |   |       1       |
-| Music  |   |       1       |
-| 360 Video  |   |       1       |
+| Trait Type | Classification | Skill Name | Skill Weight |
+| :-------------:| :-------------: | :-------------: | :-------------: |
+| Skill | Programmer  | Java  |       1       |
+| Skill | Programmer  | Python  |       2       |
+| Skill | Programmer  | C#  |       3       |
+| Skill | Programmer  | Unity  |       4       |
+| Skill | Artist  | Drawing  |       -1       |
+| Skill | Artist  | Illustrator  |       -2       |
+| Skill | Artist  |  Photoshop |       -3       |
+| Skill | Artist  |  Maya |       -4       |
 
 
-//Weighted based on "experience".  Weight/connection criterion be based on sum of skill weight, connecting pairs with total Skill Weight > 4 (favoring teams with more experienced members) or alternatively total weights < 7 (balanced experienced teams) 
+Interests Trait 
 
-class Rank : Trait 
+All interests are weighted to be 1 since pairs will be matched based on # of matched Interests between people.  Threshold for a matched pair is at least 2 same interests.
 
-| Classification | Skill Name | Skill Weight |
-| :-------------: | :-------------: | :-------------: |
-| Freshman  |   |       1       |
-| Sophomore  |   |       2       |
-| Junior  |   |       3       |
-| Senior  |   |       4       |
-| Graduate  |   |       5       |
+| Trait Type | Classification | Skill Name | Skill Weight |
+| :-------------: | :-------------: | :-------------: | :-------------: |
+| Interests | Education  |   |       1       |
+| Interests | Film  |   |       1       |
+| Interests | Games  |   |       1       |
+| Interests | Music  |   |       1       |
+| Interests | 360 Video  |   |       1       |
 
+
+Rank Trait 
+
+Rank represents the current progress in school, with higher weights for upper classmen to represent more "experience". Matched pairs can be determined based on the sum of their weights, with sum  of Skill Weight > 8 (matching teams with more experienced members) or alternatively sum of Skill Weight < 7 (balance of upper and under classmen pairs) 
+
+
+| Trait Type | Classification | Skill Name | Skill Weight |
+| :-------------: | :-------------: | :-------------: | :-------------: |
+| Rank | Freshman  |   |       1       |
+| Rank | Sophomore  |   |       2       |
+| Rank | Junior  |   |       3       |
+| Rank | Senior  |   |       4       |
+| Rank | Graduate  |   |       5       |
+
+Department Trait 
 
 // Weights between -2 and 2 to classify pairs who are more Programming oriented (positively weighted) , or Artistically Oriented (negatively weighted), or balanced ( near 0 )
 //  Connection criterion will favor/connect pairs of people who are more balanced (weighted near 0)
 
-class Department : Trait 
 
-| Classification| Skill Name | Skill Weight |
-| :-------------: | :-------------: | :-------------: |
-| CS  |   |       -2       |
-| ATLAS  |   |      -1       |
-| Arts and Science  |   |       1       |
-| Film  |   |       2       |
+| Trait Type | | Classification| Skill Name | Skill Weight |
+| :-------------: | :-------------: | :-------------: | :-------------: |
+| Department | CS  |   |       -2       |
+| Department | ATLAS  |   |      -1       |
+| Department | Arts and Science  |   |       1       |
+| Department | Film  |   |       2       |
 
 
 
