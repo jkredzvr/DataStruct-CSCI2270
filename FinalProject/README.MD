@@ -13,7 +13,7 @@ Project Requirements
 ### Project Summary
 The motivation for this project was to create an application that could "match" or pair up students from different colleges and majors based on their interests or knowledge of programming/artistic skill.  In our Virtual Reality/Augmented Reality student club, there are students from different backgrounds, schools, with varying levels of experiences and interests. This application aims to help match students, with varying qualities/traits, based on different matching thresholds. 
 
-Each student or "Person" have properties or "Traits" regarding
+Each student or "Person" have properties or "Traits" regarding:
 
 - Interests [VR, Film, Games, Education]
 - School [ATLAS, CS, Arts and Science, TAM]
@@ -32,9 +32,9 @@ From these network graphs, you could possibly identify/match:
 Each trait is given a weight to determine whether two people would be a good match as a team for different thresholds.  The following describes the weights for each Trait and thresholds and reasoning for determining a match.
 
 
-Skill Trait 
+#### Skill Trait 
 
-Weights between -4 and 4 to classify pairs who are Programmers (positively weighted) , Artistic (negatively weighted), or balanced ( near 0 ).  (Positive/Negative values were used to differentiate Programming and Artisticly weighted pairs, and not based on my view of Programmers vs Artists) 
+Weights between -4 and 4 to classify pairs who are Programmers (positively weighted) , Artistic (negatively weighted), or balanced ( near 0 ).  (Positive/Negative values were used to differentiate Programming and Artistically weighted pairs, and not based on my view of Programmers vs Artists) 
 
 Pairs are matched/connect if the sum of their Skill Weights are near 0 ( -2 < sum < 2 )
 
@@ -50,7 +50,7 @@ Pairs are matched/connect if the sum of their Skill Weights are near 0 ( -2 < su
 | Skill | Artist  |  Maya |       -4       |
 
 
-Interests Trait 
+#### Interests Trait 
 
 All interests are weighted to be 1 since pairs will be matched based on # of matched Interests between people.  Threshold for a matched pair is at least 2 same interests.
 
@@ -62,8 +62,7 @@ All interests are weighted to be 1 since pairs will be matched based on # of mat
 | Interests | Music  |   |       1       |
 | Interests | 360 Video  |   |       1       |
 
-
-Rank Trait 
+#### Rank Trait 
 
 Rank represents the current progress in school, with higher weights for upper classmen to represent more "experience". Matched pairs can be determined based on the sum of their weights, with sum  of Skill Weight > 8 (matching teams with more experienced members) or alternatively sum of Skill Weight < 7 (balance of upper and under classmen pairs) 
 
@@ -76,11 +75,10 @@ Rank represents the current progress in school, with higher weights for upper cl
 | Rank | Senior  |   |       4       |
 | Rank | Graduate  |   |       5       |
 
-Department Trait 
+#### Department Trait 
 
-// Weights between -2 and 2 to classify pairs who are more Programming oriented (positively weighted) , or Artistically Oriented (negatively weighted), or balanced ( near 0 )
-//  Connection criterion will favor/connect pairs of people who are more balanced (weighted near 0)
-
+School department traits are weighted between -2 and 2 to classify pairs who are more Programming oriented (positively weighted) , or Artistically Oriented (negatively weighted), or balanced ( near 0 ).
+Pairs are matched/connect if the sum of their Skill Weights are near 0 ( -2 < sum < 2 ) for more balanced teams.
 
 | Trait Type | | Classification| Skill Name | Skill Weight |
 | :-------------: | :-------------: | :-------------: | :-------------: |
@@ -91,12 +89,12 @@ Department Trait
 
 
 
-Public methods allow for
-- Adding a new student
-- Seeding the graph network with randomized students
-- Removing a student from the graph network
-- Selecting the criteria for (Sorting the Groups, Connections, and Compatibility)
-- Calculating the network of students based the selected criterion
+#### Public methods allow for
+- Selection of criterion for weights and connections
+- Seeding the graph network with randomized students with traits
+- Calculating the network of student's connections and their weight calculations based the 2 selected criterion
+- Printing information about the student's trait
+- Generating Trait class from a txt file delimited with ,
 
 ### How to Run
 This program needs:
@@ -105,7 +103,9 @@ This program needs:
    
 2) A people txt file with each person's name on a new line.  For the time being the application only uses first names (one word) and there cannot by any duplicate names.
 
-
+In a linux terminal enter,
+./juch6102FinalProj_main traitfilename.txt peoplefilename.txt 
+with the juch6102FinalProj_main.o , traitfilename.txt, peoplefilename.txt, in the same directory
 
 ### Dependencies
 No Dependencies
