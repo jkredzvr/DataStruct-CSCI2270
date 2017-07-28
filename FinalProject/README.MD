@@ -80,7 +80,7 @@ Rank represents the current progress in school, with higher weights for upper cl
 School department traits are weighted between -2 and 2 to classify pairs who are more Programming oriented (positively weighted) , or Artistically Oriented (negatively weighted), or balanced ( near 0 ).
 Pairs are matched/connect if the sum of their Skill Weights are near 0 ( -2 < sum < 2 ) for more balanced teams.
 
-| Trait Type | | Classification| Skill Name | Skill Weight |
+| Trait Type |  Classification| Skill Name | Skill Weight |
 | :-------------: | :-------------: | :-------------: | :-------------: |
 | Department | CS  |   |       -2       |
 | Department | ATLAS  |   |      -1       |
@@ -103,9 +103,11 @@ This program needs:
    
 2) A people txt file with each person's name on a new line.  For the time being the application only uses first names (one word) and there cannot by any duplicate names.
 
-In a linux terminal enter,
+In a linux terminal enter, 
+
 ./juch6102FinalProj_main traitfilename.txt peoplefilename.txt 
-with the juch6102FinalProj_main.o , traitfilename.txt, peoplefilename.txt, in the same directory
+
+with the juch6102FinalProj_main.o , traitfilename.txt, peoplefilename.txt, in the same directory.
 
 ### Dependencies
 No Dependencies
